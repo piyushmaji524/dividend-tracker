@@ -1,53 +1,122 @@
-# Dividend Tracker - Next 10 Days
+# 📊 Dividend Tracker - Free Web Application
 
-A free, lightweight web tool that shows which companies will declare dividends within the next 10 days.
+**Track Indian Companies Declaring Dividends in Next 10 Days**
 
-## Features
+[![GitHub](https://img.shields.io/badge/GitHub-piyushmaji524-blue)](https://github.com/piyushmaji524/dividend-tracker)
+[![License](https://img.shields.io/badge/License-Private-red)](#license)
+[![Python](https://img.shields.io/badge/Python-3.7+-green)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.3.3-lightblue)](https://flask.palletsprojects.com/)
 
-- 📊 Real-time dividend data from Yahoo Finance
-- 📈 Beautiful, responsive UI
-- 🔍 Search and filter companies
-- 📅 Days-until countdown for each dividend
-- 💰 Display dividend amount and yield
-- 🔄 Auto-refresh capability
-- ⚡ Fast and lightweight
-- 📱 Mobile-friendly interface
+---
 
-## Installation
+## 🎯 What is Dividend Tracker?
 
-1. **Install Python 3.8+** from [python.org](https://www.python.org)
+**Dividend Tracker** is a **free, open-source web application** that helps Indian stock market investors track companies declaring dividends within the next **10 days**. 
 
-2. **Clone or download this project**
+### Key Features:
+✅ **Real-time Dividend Data** - See upcoming dividends for 50 NSE-listed companies  
+✅ **Eligibility Checker** - Know if buying today qualifies you for dividends  
+✅ **Distribution Timeline** - Ex-date, Record date, and Distribution date  
+✅ **Sector Filtering** - Filter by IT, Banks, Energy, FMCG, Pharma, and more  
+✅ **ROI Calculator** - Calculate 1-year and 5-year returns  
+✅ **Shareable Cards** - Generate beautiful dividend cards for WhatsApp/Instagram  
+✅ **Visitor Counter** - Track page visits with localStorage  
+✅ **Responsive Design** - Works on desktop, tablet, and mobile  
 
-3. **Navigate to the project folder:**
-   ```bash
-   cd "d:\Digital Products\STOCK DEVIDENT"
-   ```
+---
 
-4. **Create a virtual environment (optional but recommended):**
-   ```bash
-   python -m venv venv
-   venv\Scripts\activate
-   ```
+## 🚀 Quick Start
 
-5. **Install dependencies:**
-   ```bash
-   pip install -r requirements.txt
-   ```
+### Option 1: Run Locally (Windows)
+Simply **double-click** `RUN_PROJECT.bat` - that's it!
 
-## Usage
+### Option 2: Run with Terminal
+```bash
+git clone https://github.com/piyushmaji524/dividend-tracker.git
+cd dividend-tracker
+pip install -r requirements.txt
+python app.py
+```
 
-1. **Start the application:**
-   ```bash
-   python app.py
-   ```
+### Option 3: Deploy Online (Replit)
+1. Go to [replit.com](https://replit.com)
+2. Click "Create" → "Import from GitHub"
+3. Select: `https://github.com/piyushmaji524/dividend-tracker`
+4. Click "Run"
 
-2. **Open your browser and go to:**
-   ```
-   http://localhost:5000
-   ```
+---
 
-3. The app will automatically fetch dividend data for popular stocks
+## 📊 Companies Tracked
+
+**50 major Indian NSE-listed companies** across sectors:
+- **IT:** TCS, Infosys, Wipro, HCL, Tech Mahindra
+- **Banks:** HDFC Bank, ICICI Bank, Axis Bank, IndusInd Bank
+- **Energy:** Reliance, NTPC, Power Grid
+- **FMCG:** ITC, Nestlé, Unilever, Britannia
+- **Pharma:** Cipla, Dr. Reddy's, Sunpharma
+- **And more...**
+
+---
+
+## 🎨 Features in Detail
+
+### 1. **Dividend Eligibility Checker**
+Know if buying today qualifies you for upcoming dividends
+
+### 2. **Three Important Dates**
+- Ex-Dividend Date, Record Date, Distribution Date
+
+### 3. **Advanced Filtering**
+- Search by name/symbol, filter by sector
+
+### 4. **Company Info Modal**
+- Price, market cap, PE ratio, 52-week high/low
+
+### 5. **ROI Calculator**
+- 1-year and 5-year return calculations
+
+### 6. **Shareable Cards**
+- Generate beautiful 1080x1920px cards for social media
+
+---
+
+## 💻 Technology Stack
+
+| Technology | Purpose |
+|-----------|---------|
+| **Python 3.x** | Backend |
+| **Flask 2.3.3** | Web framework |
+| **HTML5 + CSS3** | Frontend |
+| **JavaScript** | Interactivity |
+| **Pillow (PIL)** | Image generation |
+
+---
+
+## 📁 Project Structure
+
+```
+dividend-tracker/
+├── app.py
+├── requirements.txt
+├── RUN_PROJECT.bat
+├── README.md
+├── DEVELOPER.md
+├── FAQ.md
+├── FEATURES.md
+├── GUIDE.md
+├── templates/index.html
+└── static/style.css, script.js
+```
+
+---
+
+## 🔧 Installation
+
+1. **Install Python 3.7+**
+2. **Clone the repository**
+3. **Install dependencies:** `pip install -r requirements.txt`
+4. **Run:** `python app.py`
+5. **Open:** `http://localhost:5000`
 
 ## Features Explained
 
