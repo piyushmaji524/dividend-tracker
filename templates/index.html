@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dividend Tracker - Next 10 Days</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Upcoming Dividend Tracker</h1>
+            <p>Companies declaring dividends in the next 10 days</p>
+        </header>
+
+        <div class="controls">
+            <button id="refreshBtn" class="btn btn-primary">🔄 Refresh Data</button>
+            <button id="shareBtn" class="btn btn-share">📱 Share Card</button>
+            <div id="lastUpdate" class="last-update">Loading...</div>
+        </div>
+
+        <div class="sector-filters">
+            <h3>Filter by Sector:</h3>
+            <button class="sector-btn active" data-sector="all">All Sectors</button>
+            <button class="sector-btn" data-sector="IT">IT</button>
+            <button class="sector-btn" data-sector="Banks">Banks</button>
+            <button class="sector-btn" data-sector="Energy">Energy</button>
+            <button class="sector-btn" data-sector="Finance">Finance</button>
+            <button class="sector-btn" data-sector="FMCG">FMCG</button>
+            <button class="sector-btn" data-sector="Pharma">Pharma</button>
+            <button class="sector-btn" data-sector="Auto">Auto</button>
+            <button class="sector-btn" data-sector="Telecom">Telecom</button>
+            <button class="sector-btn" data-sector="Infrastructure">Infrastructure</button>
+        </div>
+
+        <div id="loading" class="loading">
+            <div class="spinner"></div>
+            <p>Fetching dividend data...</p>
+        </div>
+
+        <div id="content" class="content" style="display: none;">
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalCount">0</div>
+                    <div class="stat-label">Companies</div>
+                </div>
+            </div>
+
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search company or symbol...">
+                <button id="searchClear" class="btn-clear">✕</button>
+            </div>
+
+            <table id="dividendTable" class="dividend-table">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable(0)">Symbol</th>
+                        <th onclick="sortTable(1)">Company</th>
+                        <th onclick="sortTable(2)">Ex-Date</th>
+                        <th onclick="sortTable(3)">Record Date</th>
+                        <th onclick="sortTable(4)">Distribution Date</th>
+                        <th onclick="sortTable(5)">Dividend/Share</th>
+                        <th onclick="sortTable(6)">Price</th>
+                        <th onclick="sortTable(7)">Yield %</th>
+                        <th>Eligible Today?</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                </tbody>
+            </table>
+
+            <div id="noResults" class="no-results" style="display: none;">
+                <p>No dividends found for the next 10 days</p>
+            </div>
+        </div>
+
+        <!-- Company Info Modal -->
+        <div id="infoModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <div id="modalBody"></div>
+            </div>
+        </div>
+
+        <!-- Share Card Modal -->
+        <div id="shareModal" class="modal">
+            <div class="modal-content share-modal-content">
+                <span class="close">&times;</span>
+                <h2>📱 Shareable Dividend Card</h2>
+                <div id="cardPreview" style="text-align: center; margin: 20px 0;">
+                    <img id="cardImage" src="" style="max-width: 100%; height: auto; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.2);">
+                </div>
+                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                    <button id="downloadCardBtn" class="btn btn-primary">⬇️ Download</button>
+                    <button id="copyCardBtn" class="btn btn-primary">📋 Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Data provided by Yahoo Finance • Free Dividend Tracker</p>
+            <p id="visitorCounter" style="margin-top: 10px; font-size: 0.9em; opacity: 0.8;">👥 Visitors: <span id="visitCount">0</span></p>
+        </footer>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
