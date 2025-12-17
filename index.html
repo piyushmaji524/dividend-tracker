@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dividend Tracker - Free Web Tool for Indian Stock Dividends</title>
+    <meta name="description" content="Track companies declaring dividends in the next 10 days. Free dividend tracker for Indian stock market (NSE). Check eligibility, ROI, and share with friends.">
+    <meta name="keywords" content="dividend tracker, Indian stocks, NSE dividends, dividend calculator, free stock tool">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        nav .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        nav .nav-links a {
+            text-decoration: none;
+            color: #333;
+            transition: color 0.3s;
+        }
+
+        nav .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .hero .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            animation: slideDown 0.8s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: #f8f9fa;
+        }
+
+        .features .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #667eea;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+        }
+
+        .stats .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 2rem;
+        }
+
+        .how-it-works .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            line-height: 50px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .step p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Companies Section */
+        .companies {
+            background: #f8f9fa;
+            padding: 5rem 2rem;
+        }
+
+        .companies .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .company-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .company-tag {
+            background: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Tech Stack */
+        .tech-stack {
+            padding: 5rem 2rem;
+        }
+
+        .tech-stack .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tech-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .tech-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .tech-item:hover {
+            transform: scale(1.05);
+        }
+
+        .tech-item-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tech-item p {
+            color: #666;
+            font-weight: 500;
+        }
+
+        /* CTA Section */
+        .cta {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+        }
+
+        .cta .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 2rem;
+        }
+
+        footer .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        footer h4 {
+            margin-bottom: 1rem;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        footer a {
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #667eea;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+            color: #aaa;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            nav .nav-links {
+                display: none;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-buttons .btn {
+                width: 100%;
+            }
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        .feature-card:nth-child(1) { animation: pulse 2s infinite; }
+        .feature-card:nth-child(2) { animation: pulse 2s infinite 0.2s; }
+        .feature-card:nth-child(3) { animation: pulse 2s infinite 0.4s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">📊 Dividend Tracker</div>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#how">How It Works</a></li>
+                <li><a href="#tech">Technology</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>💰 Track Dividend Opportunities</h1>
+            <p>Know which companies are declaring dividends in the next 10 days. Free, instant, no login required.</p>
+            <div class="hero-buttons">
+                <a href="https://replit.com/@piyushmaji524/dividend-tracker" class="btn btn-primary">🚀 Launch Now</a>
+                <a href="https://github.com/piyushmaji524/dividend-tracker" class="btn btn-secondary">📖 View on GitHub</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="container">
+            <h2 class="section-title">✨ Powerful Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">✓</div>
+                    <h3>Eligibility Checker</h3>
+                    <p>Know instantly if buying today qualifies you for upcoming dividends. No confusion, just clear YES or NO.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📅</div>
+                    <h3>Important Dates</h3>
+                    <p>See Ex-Dividend Date, Record Date, and Distribution Date. Plan your purchases strategically.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Advanced Search</h3>
+                    <p>Search by company name or symbol. Filter by sector. Sort by any column. Find what you need instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Company Info</h3>
+                    <p>View detailed company information including stock price, market cap, PE ratio, and 52-week highs/lows.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>ROI Calculator</h3>
+                    <p>Calculate expected 1-year and 5-year returns. Make informed investment decisions.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📱</div>
+                    <h3>Shareable Cards</h3>
+                    <p>Generate beautiful cards and share on WhatsApp, Instagram, Facebook. Spread the dividend knowledge!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stat-item">
+                <h3>50+</h3>
+                <p>Indian Companies</p>
+            </div>
+            <div class="stat-item">
+                <h3>10+</h3>
+                <p>Sectors Covered</p>
+            </div>
+            <div class="stat-item">
+                <h3>30+</h3>
+                <p>Features</p>
+            </div>
+            <div class="stat-item">
+                <h3>100%</h3>
+                <p>Free & Open Source</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how">
+        <div class="container">
+            <h2 class="section-title">🎯 How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Open App</h3>
+                    <p>Launch the app - no registration needed. Works on desktop, tablet, and mobile.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Search Company</h3>
+                    <p>Search by name or symbol. Filter by sector. Sort by your preference.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Check Eligibility</h3>
+                    <p>See if you can buy today and get the dividend. Get instant YES or NO.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Make Decision</h3>
+                    <p>Review all details including dates, yields, and ROI. Make informed investment decisions.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <h3>Share Knowledge</h3>
+                    <p>Generate shareable cards and spread dividend knowledge with friends and family.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Companies Section -->
+    <section class="companies">
+        <div class="container">
+            <h2 class="section-title">🏢 Track 50+ Indian Companies</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 2rem;">Across all major sectors of the Indian stock market</p>
+            <div class="company-tags">
+                <span class="company-tag">🖥️ IT - TCS, Infosys, Wipro</span>
+                <span class="company-tag">🏦 Banks - HDFC, ICICI, Axis</span>
+                <span class="company-tag">⚡ Energy - Reliance, NTPC</span>
+                <span class="company-tag">🍔 FMCG - ITC, Nestlé, Britannia</span>
+                <span class="company-tag">💊 Pharma - Cipla, Dr. Reddy's</span>
+                <span class="company-tag">🚗 Auto - Maruti, Bajaj</span>
+                <span class="company-tag">📡 Telecom - Airtel, Jio</span>
+                <span class="company-tag">🏗️ Infrastructure - Adani, L&T</span>
+                <span class="company-tag">...and many more!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tech Stack -->
+    <section class="tech-stack" id="tech">
+        <div class="container">
+            <h2 class="section-title">⚙️ Built With Modern Technology</h2>
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-item-icon">🐍</div>
+                    <p>Python</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-icon">🌶️</div>
+                    <p>Flask</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-icon">📄</div>
+                    <p>HTML5</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-icon">🎨</div>
+                    <p>CSS3</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-icon">⚡</div>
+                    <p>JavaScript</p>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-item-icon">🖼️</div>
+                    <p>Pillow (PIL)</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Start -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">🚀 Quick Start</h2>
+            <div class="steps">
+                <div class="step">
+                    <h3>Windows</h3>
+                    <p>Double-click <code>RUN_PROJECT.bat</code></p>
+                </div>
+                <div class="step">
+                    <h3>Terminal</h3>
+                    <p><code>pip install -r requirements.txt</code><br><code>python app.py</code></p>
+                </div>
+                <div class="step">
+                    <h3>Online</h3>
+                    <p>Deploy to Replit or Railway in seconds</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Ready to Start Tracking Dividends?</h2>
+            <p>It's free, fast, and requires no registration. Launch now and start earning passive income!</p>
+            <a href="https://replit.com/@piyushmaji524/dividend-tracker" class="btn btn-secondary">🎯 Launch Dividend Tracker</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div>
+                <h4>📊 Dividend Tracker</h4>
+                <p>Free tool to track Indian stock dividends in the next 10 days. No login, no fees, 100% free.</p>
+            </div>
+            <div>
+                <h4>📚 Resources</h4>
+                <ul>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker">GitHub Repository</a></li>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/blob/main/README.md">Documentation</a></li>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/blob/main/FAQ.md">FAQ</a></li>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/blob/main/GUIDE.md">User Guide</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>🔗 Quick Links</h4>
+                <ul>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/blob/main/FEATURES.md">Features</a></li>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/blob/main/SECURITY.md">Security</a></li>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/blob/main/CONTRIBUTING.md">Contributing</a></li>
+                    <li><a href="https://github.com/piyushmaji524">Developer</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4>📞 Connect</h4>
+                <ul>
+                    <li><a href="https://github.com/piyushmaji524">GitHub Profile</a></li>
+                    <li><a href="https://github.com/piyushmaji524/dividend-tracker/issues">Report Issues</a></li>
+                    <li><a href="mailto:piyushmaji524@gmail.com">Email</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dividend Tracker. All rights reserved. | Made with ❤️ by <a href="https://github.com/piyushmaji524">Piyush Maji</a></p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Add scroll animation
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .step, .tech-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
